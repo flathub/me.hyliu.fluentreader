@@ -71,6 +71,7 @@
   </screenshots>
 
   <releases>
+    <release version="v1.0.0" date="2021-02-02" />
     <release version="v0.9.0-beta" date="2020-12-26" />
     <release version="v0.8.1-beta" date="2020-11-25" />
   </releases>
