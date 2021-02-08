@@ -56,7 +56,7 @@
   <url type="translate">https://github.com/yang991178/fluent-reader/tree/master/src/scripts/i18n</url>
   <url type="help">https://github.com/yang991178/fluent-reader/wiki/Support</url>
 
-  <content_rating type="oars-1.1" />
+  <content_rating type="oars-1.1"/>
 
   <screenshots>
     <screenshot type="default">
@@ -71,8 +71,9 @@
   </screenshots>
 
   <releases>
-    <release version="v1.0.0" date="2021-02-02" />
-    <release version="v0.9.0-beta" date="2020-12-26" />
-    <release version="v0.8.1-beta" date="2020-11-25" />
+    <release version="1.0.0" date="2021-02-08"/>
+    <release version="v1.0.0" date="2021-02-02"/>
+    <release version="v0.9.0-beta" date="2020-12-26"/>
+    <release version="v0.8.1-beta" date="2020-11-25"/>
   </releases>
 </component>
