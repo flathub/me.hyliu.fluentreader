@@ -34,9 +34,6 @@ modules:
       # would look more like the npm commands in the vanilla-quick-start manifest, just without
       # the --prefix.
 
-      # Apply the build command patch
-      - git apply package.json.patch --directory fluent-reader
-
       # Run electron-builder, passing the architecture arguments to it.
       # Note that the -- is important; without that, the argument will be passed to
       # yarn instead of electron-builder.
