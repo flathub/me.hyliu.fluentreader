@@ -64,7 +64,9 @@ modules:
         dest-filename: start-fluent-reader.sh
         commands:
           # Use zypak to call the electron binary to enable sandboxing and prevents no sandbox error
-          - zypak-wrapper /app/fluent-reader/fluent-reader --enable-features=UseOzonePlatform --ozone-platform=wayland
+          - if [[ $XDG_SESSION_TYPE == "wayland" ]]; then zypak-wrapper /app/fluent-reader/fluent-reader --enable-features=UseOzonePlatform --ozone-platform=wayland;
+            else zypak-wrapper /app/fluent-reader/fluent-reader; fi
+
   - name: appdata
     buildsystem: simple
     build-commands:
