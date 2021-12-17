@@ -1,10 +1,10 @@
 app-id: me.hyliu.fluentreader
 runtime: org.freedesktop.Platform
-runtime-version: "20.08"
+runtime-version: '20.08'
 branch: stable
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
-base-version: "20.08"
+base-version: '20.08'
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.node14
 command: start-fluent-reader
@@ -38,8 +38,8 @@ modules:
       # Run electron-builder, passing the architecture arguments to it.
       # Note that the -- is important; without that, the argument will be passed to
       # yarn instead of electron-builder.
-      - ". flatpak-node/electron-builder-arch-args.sh; npm run --offline build;
-        $(npm bin)/electron-builder --dir -p never -- $ELECTRON_BUILDER_ARCH_ARGS" # Copy the resulting, unpacked directory to /app.
+      - . flatpak-node/electron-builder-arch-args.sh; npm run --offline build; $(npm
+        bin)/electron-builder --dir -p never -- $ELECTRON_BUILDER_ARCH_ARGS        # Copy the resulting, unpacked directory to /app.
       # (A glob is used because the directory name may contain the current arch.)
       - cp -r bin/linux/*/linux*unpacked /app/fluent-reader
       # If you passed --electron-non-patented-ffmpeg, you could install it like this:
@@ -51,12 +51,12 @@ modules:
     sources:
       - type: git
         url: https://github.com/yang991178/fluent-reader.git
-        tag: v1.0.2
+        tag: v1.1.0
         x-checker-data:
           type: anitya
           project-id: 148566
           tag-template: v$version
-        commit: e6c6fdbb2d1a2163007d1f29b6c8174253485444
+        commit: 73930f3e69e2dfa113dd10f0341e05892cabcf92
       # Add the flatpak-node-generator generated sources.
       - generated-sources.json
       # Our runner script.
@@ -64,8 +64,9 @@ modules:
         dest-filename: start-fluent-reader.sh
         commands:
           # Use zypak to call the electron binary to enable sandboxing and prevents no sandbox error
-          - if [[ $XDG_SESSION_TYPE == "wayland" ]]; then zypak-wrapper /app/fluent-reader/fluent-reader --enable-features=UseOzonePlatform --ozone-platform=wayland;
-            else zypak-wrapper /app/fluent-reader/fluent-reader; fi
+          - if [[ $XDG_SESSION_TYPE == "wayland" ]]; then zypak-wrapper /app/fluent-reader/fluent-reader
+            --enable-features=UseOzonePlatform --ozone-platform=wayland; else zypak-wrapper
+            /app/fluent-reader/fluent-reader; fi
 
   - name: appdata
     buildsystem: simple
