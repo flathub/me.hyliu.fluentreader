@@ -11,8 +11,7 @@ command: start-fluent-reader
 separate-locales: false
 finish-args:
   - --share=ipc
-  - --socket=wayland
-  - --socket=fallback-x11 # TODO: add wayland when this merged: https://github.com/electron/electron/issues/10915
+  - --socket=x11 # use x11 due to https://github.com/flathub/me.hyliu.fluentreader/issues/12
   - --device=dri # hardware acceleration
   - --socket=pulseaudio # videos/audios
   - --share=network
@@ -64,9 +63,7 @@ modules:
         dest-filename: start-fluent-reader.sh
         commands:
           # Use zypak to call the electron binary to enable sandboxing and prevents no sandbox error
-          - if [[ $XDG_SESSION_TYPE == "wayland" ]]; then zypak-wrapper /app/fluent-reader/fluent-reader
-            --enable-features=UseOzonePlatform --ozone-platform=wayland; else zypak-wrapper
-            /app/fluent-reader/fluent-reader; fi
+          - exec zypak-wrapper /app/fluent-reader/fluent-reader "$@"
 
   - name: appdata
     buildsystem: simple
