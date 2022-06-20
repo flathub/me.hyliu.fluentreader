@@ -50,12 +50,12 @@ modules:
     sources:
       - type: git
         url: https://github.com/yang991178/fluent-reader.git
-        tag: v1.1.0
+        tag: v1.1.2
         x-checker-data:
           type: anitya
           project-id: 148566
           tag-template: v$version
-        commit: 73930f3e69e2dfa113dd10f0341e05892cabcf92
+        commit: b827f268ace03181cac05b6100a6935524ca6bae
       # Add the flatpak-node-generator generated sources.
       - generated-sources.json
       # Our runner script.
