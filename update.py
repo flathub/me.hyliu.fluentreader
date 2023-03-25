@@ -12,9 +12,6 @@ import sys
 import shutil
 import urllib.request
 
-GENERATOR_SCRIPT_URL = f"https://github.com/flatpak/flatpak-builder-tools/raw/master/node/flatpak-node-generator.py"
-
-
 def run(cmdline, cwd=None):
     logging.info(f"Running {cmdline}")
     if cwd is None:
@@ -32,34 +29,24 @@ def run(cmdline, cwd=None):
 def generate_sources(
     app_source,
     clone_dir=None,
-    generator_script_url=None,
-    generator_script=None,
     generator_args=None,
 ):
-    cache_dir = os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))
+    cache_dir = ".cache"
 
     if clone_dir is None:
         repo_dir = app_source["url"].replace("://", "_").replace("/", "_")
         clone_dir = os.path.join(cache_dir, "flatpak-updater", repo_dir)
+        
     if not os.path.isdir(os.path.join(clone_dir, ".git")):
         run(["git", "clone", "--recursive", app_source["url"], clone_dir])
 
     run(["git", "fetch", "origin", app_source["ref"]], cwd=clone_dir)
     run(["git", "checkout", app_source["ref"]], cwd=clone_dir)
 
-    if generator_script == None:
-        generator_script = os.path.join(cache_dir, "flatpak-updater", "generator.py")
-        urllib.request.urlretrieve(
-            generator_script_url or GENERATOR_SCRIPT_URL, generator_script
-        )
-    else:
-        generator_script = os.path.abspath(generator_script)
-    os.chmod(generator_script, stat.S_IRWXU)
-
     if generator_args is None:
         generator_args = []
 
-    generator_cmdline = [generator_script, "-o", "generated-sources.json"]
+    generator_cmdline = ["flatpak-node-generator", "-o", "generated-sources.json"]
     generator_cmdline.extend(generator_args)
     run(generator_cmdline, cwd=clone_dir)
     shutil.move(
@@ -92,8 +79,6 @@ def commit_changes(app_source, files, on_new_branch=True):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-g", "--generator", required=False)
-    parser.add_argument("--generator-script-url", required=False)
     parser.add_argument("-a", "--generator-arg", action="append", required=False)
     parser.add_argument("-d", "--clone-dir", required=False)
     parser.add_argument("-o", "--gen-output", default="generated-sources.json")
@@ -116,8 +101,6 @@ def main():
     generated_sources = generate_sources(
         app_source,
         clone_dir=args.clone_dir,
-        generator_script_url=args.generator_script_url,
-        generator_script=args.generator,
         generator_args=args.generator_arg,
     )
     with open(args.app_source_json, "w") as o:
