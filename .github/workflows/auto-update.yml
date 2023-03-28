@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: |
           set -e
-          sudo apt install python3-toml python3-aiohttp
+          sudo apt install python3-toml python3-aiohttp pipx
 
       - uses: actions/checkout@v2
 
@@ -27,6 +27,7 @@ jobs:
           git clone -b ${BUILDER_TOOLS_BRANCH} \
                        ${BUILDER_TOOLS_URL} \
                        builder-tools
+          pipx install builder-tools/node
 
       # Rather than track the tip of a branch
       - name: Get the current tag
@@ -46,5 +47,5 @@ jobs:
           set -e
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config user.name "Workflow trigger"
-          python3 ./update.py fluent-reader-git.json --ref ${{ env.TAG }} -g builder-tools/node/flatpak-node-generator.py --generator-arg=--electron-node-headers --generator-arg=--xdg-layout --generator-arg=-r --generator-arg=npm --generator-arg=package-lock.json
+          python3 ./update.py fluent-reader-git.json --ref ${{ env.TAG }} --generator-arg=--electron-node-headers --generator-arg=-r --generator-arg=npm --generator-arg=package-lock.json
           git push https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}

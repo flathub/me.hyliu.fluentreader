@@ -11,7 +11,8 @@ command: start-fluent-reader
 separate-locales: false
 finish-args:
   - --share=ipc
-  - --socket=x11 # use x11 due to https://github.com/flathub/me.hyliu.fluentreader/issues/12
+  - --socket=wayland
+  - --socket=fallback-x11
   - --device=dri # hardware acceleration
   - --socket=pulseaudio # videos/audios
   - --share=network
@@ -63,7 +64,7 @@ modules:
         dest-filename: start-fluent-reader.sh
         commands:
           # Use zypak to call the electron binary to enable sandboxing and prevents no sandbox error
-          - exec zypak-wrapper /app/fluent-reader/fluent-reader "$@"
+          - exec zypak-wrapper /app/fluent-reader/fluent-reader --ozone-platform-hint=auto "$@"
 
   - name: appdata
     buildsystem: simple
