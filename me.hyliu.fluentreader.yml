@@ -1,10 +1,10 @@
 app-id: me.hyliu.fluentreader
 runtime: org.freedesktop.Platform
-runtime-version: '21.08'
+runtime-version: '22.08'
 branch: stable
 sdk: org.freedesktop.Sdk
 base: org.electronjs.Electron2.BaseApp
-base-version: '21.08'
+base-version: '22.08'
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.node14
 command: start-fluent-reader
@@ -16,7 +16,6 @@ finish-args:
   - --device=dri # hardware acceleration
   - --socket=pulseaudio # videos/audios
   - --share=network
-  - --filesystem=host # TODO: remove after xdg-desktop-portal merged: https://github.com/electron/electron/pull/19159
   - --talk-name=org.freedesktop.Notifications # TODO: remove after xdg-desktop-portal merged
 modules:
   - name: fluent-reader
