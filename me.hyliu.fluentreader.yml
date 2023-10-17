@@ -50,12 +50,12 @@ modules:
     sources:
       - type: git
         url: https://github.com/yang991178/fluent-reader.git
-        tag: v1.1.3
+        tag: v1.1.4
         x-checker-data:
           type: anitya
           project-id: 148566
           tag-template: v$version
-        commit: 7e9cff26ab74a83fdbbe042905c3e7647ab3e826
+        commit: 9fd12a9fb21e67f4829253ef918fb060d5ecc6aa
       # Add the flatpak-node-generator generated sources.
       - generated-sources.json
       # Our runner script.
@@ -63,7 +63,8 @@ modules:
         dest-filename: start-fluent-reader.sh
         commands:
           # Use zypak to call the electron binary to enable sandboxing and prevents no sandbox error
-          - exec zypak-wrapper /app/fluent-reader/fluent-reader --ozone-platform-hint=auto "$@"
+          - exec zypak-wrapper /app/fluent-reader/fluent-reader --ozone-platform-hint=auto
+            "$@"
 
   - name: appdata
     buildsystem: simple
