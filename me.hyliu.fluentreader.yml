@@ -17,6 +17,8 @@ finish-args:
   - --socket=pulseaudio # videos/audios
   - --share=network
   - --talk-name=org.freedesktop.Notifications # TODO: remove after xdg-desktop-portal merged
+  # fixes broken cursor when on Wayland
+  - --env=XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons
 modules:
   - name: fluent-reader
     buildsystem: simple
